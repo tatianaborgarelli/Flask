@@ -1,18 +1,21 @@
-from flask import Flask, request
+from flask import Flask, request, render_template,redirect,url_for
+from markupsafe import escape
+
 app = Flask(__name__)
 
 @app.get("/")
-def hola_mundo():
-    return render_template("saludo.html", )
+def raiz():
+    return render_template("index.html")
+
+@app.get("/bienvenida")
+def bienvenida():
+        return render_template("bienvenida.html", nombre=nombre())    
 
     
-@app.get("/adios")
-def adios():
-    return f"""
-    <h1>¡Hola {request.args.get("nombre", "mundo")}!</h1>"
-    <p>
-    Esta es nuesta <strong> primera </strong> página
-    </p>
-    """
+@app.get("/despedida")
+def despedida():
+    return render_template("despedida.html", nombre=nombre())
 
-print("Iniciando servidor")
+def nombre():
+    return request.args.get("nombre", "Mundo")    
+   
